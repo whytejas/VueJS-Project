@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My first Vue app</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+        <div class="container" id="app">
+            <h1 class="text-success">A VueJS ToDo List </h1>
+            <button  v-if="state === 'default'" class="btn btn-primary" @click="state = 'edit'">Add New Items</button>
+        <br><br>
+
+            <div v-if="state=== 'edit'" class="form-group add-item-form">
+
+
+            <input class="form-control" type="text" name="newItem" id="newItem" v-model="newItem" @keyup.enter="saveItem"></input><br>
+            <button class="btn btn-danger" :disabled="newItem.length === 0" @click="saveItem">Add another item</button></div>
+           
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action" v-for="item in reversedItems" @click="items.pop(item)">
+                    {{item.toLocaleUpperCase()}}</li>
+            </ul>
+            <br><p> {{ text}} </p>
+        </div>
+
+
+        <script> var app = new Vue({
+             
+
+               el: "#app",
+
+                data: {
+                    state: "default",
+                    text: "Click on a pre-existing one to delete it!",
+                    items: ["one",
+                        "two",
+                        "three"],
+                    newItem: ""
+                },
+
+                computed: {
+                    reversedItems(){
+                        return this.items.slice(0).reverse();
+                    }
+                },
+
+                methods: {
+                    saveItem: function () {
+                        this.items.push(this.newItem);
+                        this.newItem = "Next item ? ";
+                    }
+                }
+
+
+            })
+        </script>
+    </body>
+
+</html>
